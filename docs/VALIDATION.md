@@ -41,3 +41,7 @@ Linux x86_64 / Node 24.19.0 / Python 3.12 / Chromium 138.0.7204.0（headless）�
 - GitHub Pagesの実公開状況は `DEPLOYMENT.md` に記録する。
 
 画像の外部送信は実装していない。GitHub Pagesへ送るのはアプリのコードと開発用goldenテスト画像だけであり、利用者が選ぶ画像ではない。
+
+## GitHub Actionsでの再検証
+
+2026-10-07、Ubuntu / Chromium 153.0.8010.12で上記テストがすべて成功。ブラウザ4件は20.8秒、失敗・スキップ・flakyは0件。500枚はUI表示14.5秒、保存まで15,378ms、出力52,291,312 bytes、50msタイマー322回、想定外通信0件。測定値は `ci-browser-benchmark.json`。Pages deployも成功し、公開URLでアプリの表示を確認した。公開上の追加手動ファイル入力は遠隔ブラウザ操作がタイムアウトしたため未完了。

@@ -4,6 +4,10 @@ JPEG / PNGを、XTEINK X3用の1冊のXTCHへ。画像・プレビュー・変�
 
 ## 使う
 
+**公開アプリ： https://progryobe.github.io/x3-batch/**
+
+GitHub： https://github.com/progryobe/x3-batch
+
 デスクトップ版Chrome / Edgeで公開URLを開き、画像またはフォルダを追加 → プレビューで調整 → **Export XTCH** → **XTCHを保存**。
 
 - X3標準：528 × 792、4階調グレー。
