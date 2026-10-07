@@ -1,0 +1,17 @@
+[
+  {
+    "name": "x3",
+    "width": 528,
+    "height": 792
+  },
+  {
+    "name": "padded",
+    "width": 13,
+    "height": 9
+  },
+  {
+    "name": "all-levels",
+    "width": 256,
+    "height": 8
+  }
+]

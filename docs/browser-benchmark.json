@@ -1,0 +1,10 @@
+{
+  "browser": "138.0.7204.0",
+  "pages": 500,
+  "input": "400 JPEG + 100 PNG, 1200x1800",
+  "elapsedMs": 32342,
+  "outputBytes": 52291312,
+  "uiTimerTicks": 670,
+  "unexpectedRequests": 0,
+  "exportLabel": "生成完了 · 31.9秒\n49.9 MiB\nXTCHを保存\nbook.xtch"
+}

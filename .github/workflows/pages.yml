@@ -1,0 +1,72 @@
+name: Test and deploy GitHub Pages
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install test and build dependencies
+        run: |
+          npm ci --prefix web
+          python -m pip install Pillow==12.3.0 numpy==2.3.5
+      - name: Python reference and golden regression
+        run: |
+          cd reference/python
+          python -m unittest discover -s tests -v
+          cd ../..
+          python scripts/generate-fixtures.py
+          git diff --exit-code -- web/tests/fixtures
+          npm test --prefix web
+      - name: Build static application
+        run: npm run build --prefix web
+      - name: Browser integration and 500-page test
+        run: |
+          python scripts/generate-benchmark.py
+          cd web
+          npx playwright install --with-deps chromium
+          npm run test:browser
+      - name: Test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: browser-test-results
+          path: |
+            web/test-results
+            docs/browser-benchmark.json
+          retention-days: 14
+      - name: Upload Pages files
+        if: github.event_name != 'pull_request'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: web/dist
+  deploy:
+    if: github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/configure-pages@v5
+      - uses: actions/deploy-pages@v4
+        id: deployment

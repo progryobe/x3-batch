@@ -1,0 +1,9 @@
+node_modules/
+web/dist/
+web/test-data/
+web/test-results/
+web/playwright-report/
+__pycache__/
+*.pyc
+.venv/
+.DS_Store
